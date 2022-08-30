@@ -4,6 +4,7 @@ import { GetStaticProps, GetStaticPropsContext } from 'next';
 import Link from 'next/link';
 import path from 'path'
 import {marked} from 'marked'
+import Image from 'next/image';
 
 type postTypeDetail = {
     slug: string,
@@ -31,7 +32,7 @@ const PostPage = ({
             <div className='card card-page'>
               <h1 className='post-title'>{title}</h1>
               <div className='post-date'>Posted on {date}</div>
-              <img src={coverImage} alt='' />
+              <Image src={coverImage} alt='' width={undefined} height={undefined} />
               <div className='post-body'>
                   <div dangerouslySetInnerHTML={{ __html: marked(content) }}></div>
               </div>
