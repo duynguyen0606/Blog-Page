@@ -26,15 +26,15 @@ const PostPage = ({
     return (
         <>
             <Link href='/'>
-            <a className='btn btn-back'>Go Back</a>
+              <a className='btn btn-back'>Go Back</a>
             </Link>
             <div className='card card-page'>
-            <h1 className='post-title'>{title}</h1>
-            <div className='post-date'>Posted on {date}</div>
-            <img src={coverImage} alt='' />
-            <div className='post-body'>
-                <div dangerouslySetInnerHTML={{ __html: marked(content) }}></div>
-            </div>
+              <h1 className='post-title'>{title}</h1>
+              <div className='post-date'>Posted on {date}</div>
+              <img src={coverImage} alt='' />
+              <div className='post-body'>
+                  <div dangerouslySetInnerHTML={{ __html: marked(content) }}></div>
+              </div>
             </div>
         </>
     )
@@ -57,22 +57,21 @@ export async function getStaticPaths() {
   }
   
 export const getStaticProps: GetStaticProps= async(context : GetStaticPropsContext) =>  {
-const slug = context.params?.slug
+  const slug = context.params?.slug
+  const markdownWithMeta = fs.readFileSync(
+      path.join('posts', slug + '.md'),
+      'utf-8'
+  )
 
-const markdownWithMeta = fs.readFileSync(
-    path.join('posts', slug + '.md'),
-    'utf-8'
-)
+  const { data: frontMatter, content } = matter(markdownWithMeta)
 
-const { data: frontMatter, content } = matter(markdownWithMeta)
-
-return {
-    props: {
-        frontMatter,
-        slug,
-        content,
-    },
-}
+  return {
+      props: {
+          frontMatter,
+          slug,
+          content,
+      },
+  }
 }
 
 export default PostPage;
